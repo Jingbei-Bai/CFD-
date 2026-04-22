@@ -364,6 +364,7 @@ def run_grid_study():
     plt.figure(figsize=(7, 5.5))
     plt.loglog(Ns, errs1_u, "o-", lw=2, label=r"$L^1(u)$ FVS 1st")
     plt.loglog(Ns, errs2_u, "s-", lw=2, label=r"$L^1(u)$ FVS 2nd")
+    plt.loglog(Ns, errs1_u[0] * (Ns[0] / Ns), "k--", lw=1.5, label=r"slope $N^{-1}$")
     plt.xlabel(r"grid size $N$")
     plt.ylabel(r"$L^1$ error in $u$")
     plt.title(r"$L^1(u)$ vs. $N$")
