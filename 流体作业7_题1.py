@@ -290,11 +290,13 @@ def run_viscosity_sweep(N=400):
     Each k-sweep: wide window + contact zoom; rho,u,p; dashed lines = exact wave
     positions from the Riemann solution.
     """
-    k2_list = [0.05, 0.12, 0.2, 0.3, 0.45]
-    k4_list = [0.0, 0.02, 0.05, 0.1, 0.15]
+    k2_max = 0.45
+    k4_max = 0.15
+    k2_list = np.linspace(0.0, k2_max, 5).tolist()
+    k4_list = np.linspace(0.0001, k4_max, 5).tolist()
     assert len(k2_list) >= 4 and len(k4_list) >= 4
-    k4_fixed_for_k2_sweep = 0.06
-    k2_fixed_for_k4_sweep = 0.25
+    k4_fixed_for_k2_sweep = 0.006
+    k2_fixed_for_k4_sweep = 0.05
 
     x_ref = np.linspace(xL, xR, 4000)
     rref, uref, pref = exact_at_t(x_ref, T_FINAL)
