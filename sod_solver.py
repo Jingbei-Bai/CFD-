@@ -46,9 +46,9 @@ def setup_matplotlib() -> None:
 
 
 def primitive_to_conserved(q: np.ndarray) -> np.ndarray:
-    rho = q[..., 0]
+    rho = np.maximum(q[..., 0], FLOOR)
     u = q[..., 1]
-    p = q[..., 2]
+    p = np.maximum(q[..., 2], FLOOR)
     U = np.empty_like(q, dtype=float)
     U[..., 0] = rho
     U[..., 1] = rho * u
@@ -129,6 +129,10 @@ def rhs(U: np.ndarray, dx: float, order: int) -> np.ndarray:
         slope = minmod(dq_left, dq_right)
         q_left_cell = qe[1:-1] - 0.5 * slope
         q_right_cell = qe[1:-1] + 0.5 * slope
+        q_left_cell[:, 0] = np.maximum(q_left_cell[:, 0], FLOOR)
+        q_left_cell[:, 2] = np.maximum(q_left_cell[:, 2], FLOOR)
+        q_right_cell[:, 0] = np.maximum(q_right_cell[:, 0], FLOOR)
+        q_right_cell[:, 2] = np.maximum(q_right_cell[:, 2], FLOOR)
         UL = primitive_to_conserved(q_right_cell[:-1])
         UR = primitive_to_conserved(q_left_cell[1:])
     else:
